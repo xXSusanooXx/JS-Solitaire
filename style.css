@@ -1,0 +1,66 @@
+
+body{
+	background-color: green;
+	color:black;
+	text-align: center;
+
+}
+.card{
+	display: inline-block;
+	width: 104px;
+	height: 160px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	margin:15px;
+	margin-left: 0px;
+
+}
+
+.shadow{
+	display: inline-block;
+	width: 104px;
+	height: 160px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	margin:15px;
+	margin-left: 0px;
+	background-color: white;
+	opacity: 0.1;
+}
+
+.field{
+	background-color: #009000;
+	border: 5px solid black;
+	border-radius: 10px;
+	width: 900px;
+	height: 600px;
+	margin: auto;
+	margin-top:100px;
+	text-align: left;
+	padding: 5px;
+}
+
+
+
+.deck{
+	background-image:url(cards/skirt.jpg);
+	margin-left: 15px;
+}
+.opened-card{
+	background-image:url(cards/6.png);
+}
+.four-aces{
+	float: right;
+}
+.ace{
+	
+
+}
+.seven-piles{
+
+}
+
+.pile1{
+	margin-left: 15px;
+}
+
