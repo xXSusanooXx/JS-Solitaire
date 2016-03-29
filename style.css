@@ -42,12 +42,12 @@ body{
 
 
 
-.deck{
+.hiden-cards-deck{
 	background-image:url(cards/skirt.jpg);
 	margin-left: 15px;
 }
-.opened-card{
-	background-image:url(cards/6.png);
+.open-cards-deck{
+	
 }
 .four-aces{
 	float: right;
