@@ -11,30 +11,32 @@ document.body.onselectstart= function() {return false};
 shuffle(arrayOfCards);
 var hidenCardsDeck = arrayOfCards.splice(0,24);
 var openCardsDeck=[];
-var piles=[];
 var NUMBERoFpILES = 7;
 
 
 
 for(var i=0;i<NUMBERoFpILES;i++)
 {
-	piles[i]=[i+1];
     var nowPileDiv=document.getElementById(i+1);
     for(var j=0;j<i;j++)
 	{
-        piles[i][j]=arrayOfCards.splice(0,1)[0];
+        piles=arrayOfCards.splice(0,1)[0];
         var cardToAddDiv = document.createElement('div');
         cardToAddDiv.classList.add('shirt');
         nowPileDiv.appendChild(cardToAddDiv);
         nowPileDiv=cardToAddDiv;
     }
-    piles[i][i]=arrayOfCards.splice(0,1)[0];
     var cardToAddDiv = document.createElement('div');
     cardToAddDiv.classList.add('card');
 	cardToAddDiv.classList.add('dragable');
-	cardToAddDiv.classList.add('dropable');
-    setBackground(cardToAddDiv,piles[i][i].path);
-    nowPileDiv.appendChild(cardToAddDiv);
+	cardToAddDiv.classList.add('droppable');
+	var card = arrayOfCards.splice(0,1)[0];
+	cardToAddDiv.setAttribute('value',card.value);
+	cardToAddDiv.setAttribute('suit',card.suit);
+	//cardToAddDiv.setAttribute('pathOfBackgr',card.path);
+	nowPileDiv.appendChild(cardToAddDiv);
+	setBackground(cardToAddDiv,card.path);
+
 }
 
 var hideDiv=document.getElementsByClassName('hiden-cards-deck')[0];

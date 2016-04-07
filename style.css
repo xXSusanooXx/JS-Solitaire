@@ -5,18 +5,21 @@ body{
 	text-align: center;
 
 }
+.dragable{
+
+}
+.dropable{
+
+}
 .card{
 	display: inline-block;
 	width: 104px;
 	height: 160px;
 	border-radius: 10px;
-	margin: 27px;
-
-
+	margin:27px;
 	margin-left: 0px;
 	vertical-align: top;
-
-
+	background-repeat: no-repeat;
 }
 .shirt{
 	display: inline-block;
@@ -85,10 +88,4 @@ body{
 
 .pile1{
 	margin-left: 27px;
-}
-.dragable{
-
-}
-.dropable{
-
 }

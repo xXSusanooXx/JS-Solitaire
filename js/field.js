@@ -36,10 +36,6 @@ function onMouseDown ( e ) {
 
     if (isCard(e.target)) {
         var card = e.target;
-        var id=parseInt(card.closest('.pile').id);
-        console.log(id);
-        var pileCard=piles[id-1][id-1];
-        console.log(pileCard);
         //alert(card.classList[0].margin);
         /*card.ondragstart = function() {
             return false;
@@ -61,20 +57,23 @@ function onMouseDown ( e ) {
         };
 
         document.onmouseup = function (e) {
+
             card.style.visibility='hidden';
             var el=document.elementFromPoint(e.pageX, e.pageY);
+            el=el.closest('.droppable');
+            console.log(el);
+            document.onmousemove = null;
+            document.onmouseup = null;
             card.style.visibility='visible';
+            if(el==null){
+                card.style.top=0;
+                card.style.left=0;
+                card.style.position='static';
+                return;
+            }
             console.log(el);
             el.appendChild(card);
             card.style.position='static';
-            el=el.closest('.pile');
-            var id = parseInt(el.id);
-
-            console.log(id);
-            piles[id-1][piles[id].length]=pileCard;
-            console.log(piles[id-1]);
-            document.onmousemove = null;
-            document.onmouseup = null;
            // card.style.position="static";
            // card.style.zIndex=0;
         };
