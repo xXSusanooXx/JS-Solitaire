@@ -14,22 +14,13 @@ var openCardsDeck=[];
 var piles=[];
 var NUMBERoFpILES = 7;
 
-piles[0]=[1];
-piles[0][0]=arrayOfCards.splice(0,1)[0];
-var nowPileDiv=document.getElementById(1);
-nowPileDiv.classList.remove('shadow');
-nowPileDiv.classList.add('card');
-setBackground(nowPileDiv,piles[0][0].path);
 
-for(var i=1;i<NUMBERoFpILES;i++)
+
+for(var i=0;i<NUMBERoFpILES;i++)
 {
 	piles[i]=[i+1];
-    piles[i][0]=arrayOfCards.splice(0,1)[0];
     var nowPileDiv=document.getElementById(i+1);
-    nowPileDiv.classList.remove('shadow');
-    nowPileDiv.classList.add('shirt');
-
-    for(var j=1;j<i;j++)
+    for(var j=0;j<i;j++)
 	{
         piles[i][j]=arrayOfCards.splice(0,1)[0];
         var cardToAddDiv = document.createElement('div');
@@ -40,6 +31,8 @@ for(var i=1;i<NUMBERoFpILES;i++)
     piles[i][i]=arrayOfCards.splice(0,1)[0];
     var cardToAddDiv = document.createElement('div');
     cardToAddDiv.classList.add('card');
+	cardToAddDiv.classList.add('dragable');
+	cardToAddDiv.classList.add('dropable');
     setBackground(cardToAddDiv,piles[i][i].path);
     nowPileDiv.appendChild(cardToAddDiv);
 }

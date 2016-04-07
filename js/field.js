@@ -12,9 +12,11 @@ function onClick ( event ) {
 }
 
 var field=document.getElementById('field');
+var parent;
+var tempCard;
 field.onmousedown=onMouseDown;
 
-function onMouseDown ( event ) {
+function onMouseDown ( e ) {
     function isCard(element) {
         if (element.classList.contains('card')) {
             return true;
@@ -32,31 +34,47 @@ function onMouseDown ( event ) {
 
     }
 
-    if (isCard(event.target)) {
-        var card = event.target;
+    if (isCard(e.target)) {
+        var card = e.target;
+        var id=parseInt(card.closest('.pile').id);
+        console.log(id);
+        var pileCard=piles[id-1][id-1];
+        console.log(pileCard);
+        //alert(card.classList[0].margin);
         /*card.ondragstart = function() {
             return false;
         };*/
         var coords = getCoords(card);
-        var shiftX = event.pageX - coords.left;
-        var shiftY = event.pageY - coords.top;
+        var shiftX = e.pageX - coords.left;
+        var shiftY = e.pageY - coords.top;
         card.style.position = 'absolute';
-        //moveAt(event);
-
+        parent=card.parentNode;
         //document.body.appendChild(card);
         //card.style.zIndex = 1000; // над другими элементами
 
-        function moveAt(event) {
-            card.style.left = event.pageX - shiftX + 'px';
-            card.style.top = event.pageY - shiftY + 'px';
+        function moveAt(e) {
+            card.style.left = e.pageX - shiftX + 'px';
+            card.style.top = e.pageY - shiftY -27 + 'px';//27 - это top-margin.
         }
-        document.onmousemove = function (event) {
-            moveAt(event);
+        document.onmousemove = function (e) {
+            moveAt(e);
         };
 
-        card.onmouseup = function () {
+        document.onmouseup = function (e) {
+            card.style.visibility='hidden';
+            var el=document.elementFromPoint(e.pageX, e.pageY);
+            card.style.visibility='visible';
+            console.log(el);
+            el.appendChild(card);
+            card.style.position='static';
+            el=el.closest('.pile');
+            var id = parseInt(el.id);
+
+            console.log(id);
+            piles[id-1][piles[id].length]=pileCard;
+            console.log(piles[id-1]);
             document.onmousemove = null;
-            card.onmouseup = null;
+            document.onmouseup = null;
            // card.style.position="static";
            // card.style.zIndex=0;
         };
