@@ -20,7 +20,6 @@ for(var i=0;i<NUMBERoFpILES;i++)
     var nowPileDiv=document.getElementById(i+1);
     for(var j=0;j<i;j++)
 	{
-        piles=arrayOfCards.splice(0,1)[0];
         var cardToAddDiv = document.createElement('div');
         cardToAddDiv.classList.add('shirt');
         nowPileDiv.appendChild(cardToAddDiv);
@@ -33,13 +32,12 @@ for(var i=0;i<NUMBERoFpILES;i++)
 	var card = arrayOfCards.splice(0,1)[0];
 	cardToAddDiv.setAttribute('value',card.value);
 	cardToAddDiv.setAttribute('suit',card.suit);
-	//cardToAddDiv.setAttribute('pathOfBackgr',card.path);
 	nowPileDiv.appendChild(cardToAddDiv);
 	setBackground(cardToAddDiv,card.path);
 
 }
-
 var hideDiv=document.getElementsByClassName('hiden-cards-deck')[0];
+var openDiv=document.getElementsByClassName('open-cards-deck')[0];
 var field=document.getElementById('field');
 field.onclick=function (event) {
     if(event.target.classList.contains('hiden-cards-deck')){
@@ -53,14 +51,22 @@ field.onclick=function (event) {
 function onDeckClick(){
 	if(hidenCardsDeck.length!==0)
 	{
-		openCardsDeck[openCardsDeck.length]=hidenCardsDeck.splice(0,1)[0];
-		var openDiv=document.getElementsByClassName('open-cards-deck')[0];
-		setBackground(openDiv,openCardsDeck[openCardsDeck.length-1].path);
+		var cardToAddDiv = document.createElement('div');
+		cardToAddDiv.classList.add('card');
+		cardToAddDiv.classList.add('dragable');
+		//cardToAddDiv.classList.add('droppable');
+		openCardsDeck[openCardsDeck.length] = hidenCardsDeck.splice(0,1)[0];
+		cardToAddDiv.setAttribute('value',openCardsDeck[openCardsDeck.length-1].value);
+		cardToAddDiv.setAttribute('suit',openCardsDeck[openCardsDeck.length-1].suit);
+		setBackground(cardToAddDiv,openCardsDeck[openCardsDeck.length-1].path);
+		openDiv=document.getElementsByClassName('open-cards-deck')[0];
+		openDiv.appendChild(cardToAddDiv);
 	}
 	else
 	{
 		hidenCardsDeck=openCardsDeck;
 		openCardsDeck=[];
+		openDiv.innerHTML='';
 		onDeckClick();
 	}
 }
