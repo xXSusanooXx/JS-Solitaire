@@ -73,10 +73,11 @@ body{
 	display: inline-block;
 	width: 104px;
 	height: 160px;
+	border: 2px solid black;
 	border-radius: 10px;
-	margin:27px;
+	margin:25px;
 	margin-left: 0px;
-	background-color:white;
+	background-color:lightgreen;
 	vertical-align: top;
 }
 .seven-piles{
@@ -90,9 +91,9 @@ body{
 	height: auto;
 	min-height: 160px;
 	border-radius: 10px;
+	background: green;
 	margin:27px;
 	margin-left: 0px;
-	background-color:green;
 	vertical-align: top;
 	background-repeat: no-repeat;
 }

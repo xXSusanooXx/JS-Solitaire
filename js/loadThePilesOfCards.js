@@ -22,6 +22,7 @@ for(var i=0;i<NUMBERoFpILES;i++)
 	{
         var cardToAddDiv = document.createElement('div');
         cardToAddDiv.classList.add('shirt');
+		cardToAddDiv.style.backgroundRepeat='no-repeat';
         nowPileDiv.appendChild(cardToAddDiv);
         nowPileDiv=cardToAddDiv;
     }
@@ -34,6 +35,7 @@ for(var i=0;i<NUMBERoFpILES;i++)
 	cardToAddDiv.setAttribute('suit',card.suit);
 	nowPileDiv.appendChild(cardToAddDiv);
 	setBackground(cardToAddDiv,card.path);
+	cardToAddDiv.style.backgroundRepeat='no-repeat';
 
 }
 var hideDiv=document.getElementsByClassName('hiden-cards-deck')[0];
