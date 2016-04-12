@@ -1,29 +1,17 @@
-function onClick ( event ) {
-        cell=event.target;
-		if(!cell.classList.contains('marked-cell')) {
-			if (cell.classList.contains ('hide-mine')) {
-				clickOnMine (cell);
-			}
-			else {
-				clickOnSafeCell(cell);
-                cell.disabled='disabled';
-			}
-        }
-}
-
-var field=document.getElementById('field');
+var field = document.getElementById('field');
 var parentCard;
 var tempCard;
-field.onmousedown=onMouseDown;
+field.onmousedown = onMouseDown;
 console.log(arrayOfCards);
 
-function onMouseDown ( e ) {
+function onMouseDown(e) {
     function isCard(element) {
         if (element.classList.contains('card')) {
             return true;
         }
         return false;
     }
+
     function getCoords(element) {
         var box = element.getBoundingClientRect();
         return {
@@ -34,7 +22,7 @@ function onMouseDown ( e ) {
 
     if (isCard(e.target)) {
         var card = e.target;
-        card.style.zIndex=90;
+        card.style.zIndex = 90;
         var top = card.style.top;
         var left = card.style.left;
         parentCard = card.parentNode;
@@ -61,13 +49,14 @@ function onMouseDown ( e ) {
             document.onmousemove = null;
             document.onmouseup = null;
             card.style.visibility = 'visible';
-            function isNotAvailable(topCard, bottomCard) {
+            function isAvailable(topCard, bottomCard) {
                 if (parseInt(topCard.getAttribute('value')) !== parseInt(bottomCard.getAttribute('value')) + 1) {
-                    return true;
+                    return false;
                 }
                 if (isBlackColor(topCard.getAttribute('suit')) === isBlackColor(bottomCard.getAttribute('suit'))) {
-                    return true;
+                    return false;
                 }
+                return true;
                 function isBlackColor(suit) {
                     switch (suit) {
                         case 'clubs':
@@ -85,11 +74,11 @@ function onMouseDown ( e ) {
                 };
             };
             function isAcePile(element) {
-                if (element.classList.contains('ace')) {
+                if (element.classList.contains('js-ace')) {
                     return true;
                 }
             };
-            function isAvailableForAcePile(bottomCard,pile) {
+            function isAvailableForAcePile(bottomCard, pile) {
                 var topCard = pile.lastChild;
                 if (parseInt(topCard.getAttribute('value')) !== parseInt(bottomCard.getAttribute('value')) - 1) {
                     return false;
@@ -100,139 +89,106 @@ function onMouseDown ( e ) {
                 return true;
 
             };
-            function rotateACard(shirtCard) {
-                shirtCard.classList.remove('shirt');
-                shirtCard.classList.add('card');
-                shirtCard.classList.add('dragable');
-                shirtCard.classList.add('droppable');
+            function rotateACard(Card) {
+                Card.classList.remove('shirt');
+                Card.classList.add('card');
+                Card.classList.add('dragable');
+                Card.classList.add('droppable');
                 var card = arrayOfCards.splice(0, 1)[0];
-                shirtCard.setAttribute('value', card.value);
-                shirtCard.setAttribute('suit', card.suit);
-                setBackground(shirtCard, card.path);
+                Card.setAttribute('value', card.value);
+                Card.setAttribute('suit', card.suit);
+                setBackground(Card, card.path);
             };
-            if (el !== null) {
-                if (isAcePile(el)) {
-                    el.style.backgroundRepeat = 'no-repeat';
-                    if(!el.classList.contains('card')){
-                        if(card.getAttribute('value')==='1'){
-
-                        }
-                        else {
-                            card.style.top = top;
-                            card.style.left = left;
-                            card.style.position = 'absolute';
-                            card.style.zIndex = 0;
-                            return;
-                        }
-                    }
-                    else {
-                        if(isAvailableForAcePile(card,el.parentNode)){
-                        el = el.parentNode;
-                        }
-                        else{
-                            card.style.top = top;
-                            card.style.left = left;
-                            card.style.position = 'absolute';
-                            card.style.zIndex = 0;
-                            return;
-                        }
-                    }
-                    var aceTop=getCoords(el).top-27;
-                    var aceLeft=getCoords(el).left;
-                    card.style.position = 'absolute';
-                    el.appendChild(card);
-                    card.style.top = aceTop;
-                    card.style.left = aceLeft;
-                    card.classList.add('droppable');
-                    card.classList.add('ace');
-                    if (parentCard.classList.contains('shirt')) {
-                        rotateACard(parentCard);
-                    }
-                    card.style.zIndex=0;
-                    openCardsDeck.splice(openCardsDeck.length - 1, 1);
-                    return;
-                }
-                else {
-                    if (el.classList.contains('pile')) {
-                        if(card.getAttribute('value')==='13'){
-                            openCardsDeck.splice(openCardsDeck.length - 1, 1);
-                            el.style.backgroundRepeat = 'no-repeat';
-                            el.classList.remove('droppable');
-                            if (parentCard.classList.contains('shirt')) {
-                                rotateACard(parentCard);
-                            }
-                            el.appendChild(card);
-                            card.classList.add('droppable');
-                            card.style.position='static';
-                            //card.style.position = 'absolute';
-                            el.style.backgroundRepeat='no-repeat';
-                        }
-                        else{
-                            if (parentCard.classList.contains('open-cards-deck') || parentCard.classList.contains('ace')) {
-                                card.style.top = top;
-                                card.style.left = left;
-                                card.style.position = 'absolute';
-                                card.style.zIndex = 0;
-                                return;
-                            }
-                            card.style.top = 0;
-                            card.style.left = 0;
-                            card.style.position = 'static';
-                            card.style.zIndex = 0;
-                            return;
-                        }
-                    }
-                    else {
-                        if (isNotAvailable(el, card)) {
-                            if (parentCard.classList.contains('open-cards-deck') || parentCard.classList.contains('ace')) {
-                                card.style.top = top;
-                                card.style.left = left;
-                                card.style.position = 'absolute';
-                                card.style.zIndex = 0;
-                                return;
-                            }
-                            card.style.top = 0;
-                            card.style.left = 0;
-                            card.style.position = 'static';
-                            card.style.zIndex = 0;
-                            return;
-                        }
-                        openCardsDeck.splice(openCardsDeck.length - 1, 1);
-                        el.style.backgroundRepeat = 'no-repeat';
-                        el.classList.remove('droppable');
-                        if (parentCard.classList.contains('shirt')) {
-                            rotateACard(parentCard);
-                        }
-                        parentCard.classList.add('droppable');
-                        el.appendChild(card);
-                        card.classList.add('droppable');
-                        card.style.position = 'static';
-                    }
-                }
-
-            }
-            else{
+            function cancelMove() {
                 if (parentCard.classList.contains('open-cards-deck') || parentCard.classList.contains('ace')) {
                     card.style.top = top;
                     card.style.left = left;
                     card.style.position = 'absolute';
-                    card.style.zIndex=0;
-                    return;
+                    card.style.zIndex = 0;
                 }
-                card.style.top = 0;
-                card.style.left = 0;
+                else {
+                    card.style.top = 0;
+                    card.style.left = 0;
+                    card.style.position = 'static';
+                    card.style.zIndex = 0;
+                }
+            }
+            function addCard() {
+                openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                el.style.backgroundRepeat = 'no-repeat';
+                el.classList.remove('droppable');
+                if (parentCard.classList.contains('shirt')) {
+                    rotateACard(parentCard);
+                }
+                if(parentCard.classList.contains('js-ace')){
+                    parentCard.classList.remove('js-ace');
+                }
+                el.appendChild(card);
+                card.classList.add('droppable');
                 card.style.position = 'static';
-                card.style.zIndex=0;
+                el.style.backgroundRepeat = 'no-repeat';
+            }
+            if (el === null) {
+                cancelMove();
                 return;
+            }
+            if (isAcePile(el)) {
+                el.style.backgroundRepeat = 'no-repeat';
+                if (!el.classList.contains('card')) {
+                    if (card.getAttribute('value') === '1') {
+                    }
+                    else {
+                        cancelMove();
+                        return;
+                    }
+                }
+                else {
+                    if (isAvailableForAcePile(card, el.parentNode)) {
+                        el = el.parentNode;
+                    }
+                    else {
+                        cancelMove();
+                        return;
+                    }
+                }
+                var aceTop = getCoords(el).top - 27;
+                var aceLeft = getCoords(el).left;
+                card.style.position = 'absolute';
+                el.appendChild(card);
+                if (!parentCard.classList.contains('ace')) {
+                    parentCard.classList.add('droppable');
+                }
+                card.style.top = aceTop;
+                card.style.left = aceLeft;
+                card.classList.add('droppable');
+                card.classList.add('js-ace');
+                if (parentCard.classList.contains('shirt')) {
+                    rotateACard(parentCard);
+                }
+                card.style.zIndex = 0;
+                openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                return;
+            }
+            else {
+                if (el.classList.contains('pile')) {
+                    if (card.getAttribute('value') === '13') {
+                        addCard();
+                    }
+                    else {
+                        cancelMove();
+                        return;
+                    }
+                }
+                else {
+                    if (!isAvailable(el, card)) {
+                        cancelMove();
+                        return;
+                    }
+                    else {
+                        addCard();
+                    }
+                }
             }
         }
     }
 }
-/*
-ball.ondragstart = function() {
-  return false;
-};
-
-	var ball = document.getElementById('ball');
-
-ball.onmousedown = function(event)*/
