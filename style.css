@@ -5,19 +5,13 @@ body{
 	text-align: center;
 
 }
-.dragable{
-
-}
-.dropable{
-
-}
 .card{
 	display: inline-block;
 	width: 104px;
 	height: auto;
 	min-height: 160px;
 	border-radius: 10px;
-	margin:27px;
+	margin:25px;
 	margin-left: 0px;
 	vertical-align: top;
 	background-repeat: no-repeat;
@@ -28,7 +22,7 @@ body{
 	height: auto;
 	min-height: 160px;
 	border-radius: 10px;
-	margin:27px;
+	margin:25px;
 	margin-left: 0px;
 	vertical-align: top;
 	background-image:url(cards/skirt.jpg);
@@ -42,23 +36,21 @@ body{
 	width: 1000px;
 	height: 600px;
 	margin: auto;
-	margin-top:10px;
 	text-align: left;
-	padding: 5px;
 }
 
 
 
 .hiden-cards-deck{
 	background-image:url(cards/skirt.jpg);
-	margin-left: 27px;
+	margin-left: 25px;
 }
 .open-cards-deck{
 	display: inline-block;
 	width: 104px;
 	height: 160px;
 	border-radius: 10px;
-	margin:27px;
+	margin:25px;
 	margin-top: 0px;
 	overflow:hidden;
 }
@@ -69,19 +61,20 @@ body{
 .four-aces{
 	float: right;
 }
-.ace{
+
+.blank1{
 	display: inline-block;
 	width: 104px;
 	height: 160px;
 	border: 1px solid black;
 	border-radius: 10px;
-	margin:25px;
+	margin:15px;
 	margin-left: 0px;
-	background-color:lightgreen;
+	background-color:green;
 	vertical-align: top;
 }
 .seven-piles{
-
+	margin: 0px;
 }
 
 
@@ -92,12 +85,25 @@ body{
 	min-height: 160px;
 	border-radius: 10px;
 	background: green;
-	margin:27px;
+	margin:15px;
 	margin-left: 0px;
 	vertical-align: top;
 	background-repeat: no-repeat;
 }
 
+
+.blank{
+	display: inline-block;
+	width: 104px;
+	height: 160px;
+	border: 1px solid black;
+	border-radius: 10px;
+	margin:15px;
+	margin-left: 0px;
+	background-color:green;
+	vertical-align: top;
+	margin-top: 40px;
+}
 .pile1{
-	margin-left: 27px;
+	margin-left: 25px;
 }

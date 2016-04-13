@@ -1,12 +1,16 @@
+function setOnClicksAndOtherThings() {
+    
+}
+
 var field = document.getElementById('field');
 var parentCard;
 var tempCard;
+var totalCountInAcePiles=0;
 field.onmousedown = onMouseDown;
-console.log(arrayOfCards);
 
 function onMouseDown(e) {
-    function isCard(element) {
-        if (element.classList.contains('card')) {
+    function isDragable(element) {
+        if (element.classList.contains('dragable')) {
             return true;
         }
         return false;
@@ -20,7 +24,7 @@ function onMouseDown(e) {
         };
     }
 
-    if (isCard(e.target)) {
+    if (isDragable(e.target)) {
         var card = e.target;
         card.style.zIndex = 90;
         var top = card.style.top;
@@ -34,7 +38,7 @@ function onMouseDown(e) {
 
         function moveAt(e) {
             card.style.left = e.pageX - shiftX + 'px';
-            card.style.top = e.pageY - shiftY - 27 + 'px';//27 - это top-margin.
+            card.style.top = e.pageY -27 - shiftY  + 'px';//27 - это top-margin.
         }
 
         document.onmousemove = function (e) {
@@ -74,7 +78,7 @@ function onMouseDown(e) {
                 };
             };
             function isAcePile(element) {
-                if (element.classList.contains('js-ace')) {
+                if (element.classList.contains('js-ace-pile')) {
                     return true;
                 }
             };
@@ -87,7 +91,6 @@ function onMouseDown(e) {
                     return false;
                 }
                 return true;
-
             };
             function rotateACard(Card) {
                 Card.classList.remove('shirt');
@@ -100,6 +103,9 @@ function onMouseDown(e) {
                 setBackground(Card, card.path);
             };
             function cancelMove() {
+                if(parentCard.classList.contains('blank')){
+                    parentCard.classList.remove('blank');
+                }
                 if (parentCard.classList.contains('open-cards-deck') || parentCard.classList.contains('ace')) {
                     card.style.top = top;
                     card.style.left = left;
@@ -114,16 +120,26 @@ function onMouseDown(e) {
                 }
             }
             function addCard() {
-                openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                if(parentCard.classList.contains('open-cards-deck')) {
+                    openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                }
                 el.style.backgroundRepeat = 'no-repeat';
                 el.classList.remove('droppable');
                 if (parentCard.classList.contains('shirt')) {
                     rotateACard(parentCard);
                 }
-                if(parentCard.classList.contains('js-ace')){
-                    parentCard.classList.remove('js-ace');
+                if(card.classList.contains('js-ace-pile')){
+                    totalCountInAcePiles--;
+                    card.classList.remove('js-ace-pile');
+                }
+                if(parentCard.classList.contains('pile')){
+                    parentCard.classList.add('blank')
+                }
+                if(el.classList.contains('blank')){
+                    el.classList.remove('blank');
                 }
                 el.appendChild(card);
+                parentCard.classList.add('droppable');
                 card.classList.add('droppable');
                 card.style.position = 'static';
                 el.style.backgroundRepeat = 'no-repeat';
@@ -151,27 +167,45 @@ function onMouseDown(e) {
                         return;
                     }
                 }
-                var aceTop = getCoords(el).top - 27;
+                var aceTop = getCoords(el).top - 25;
                 var aceLeft = getCoords(el).left;
                 card.style.position = 'absolute';
                 el.appendChild(card);
+                if(!parentCard.classList.contains('js-ace-pile')) {
+                    ++totalCountInAcePiles;
+                }
+                console.log(' total number of cards are in :' +totalCountInAcePiles )
+                if(totalCountInAcePiles===52){
+                    alert('You Win!');
+                    document.onmousedown=null;
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                }
                 if (!parentCard.classList.contains('ace')) {
                     parentCard.classList.add('droppable');
                 }
                 card.style.top = aceTop;
                 card.style.left = aceLeft;
                 card.classList.add('droppable');
-                card.classList.add('js-ace');
+                card.classList.add('js-ace-pile');
                 if (parentCard.classList.contains('shirt')) {
                     rotateACard(parentCard);
                 }
+                if(parentCard.classList.contains('pile')){
+                    parentCard.classList.add('blank')
+                }
+                if(el.classList.contains('blank')){
+                    el.classList.remove('blank');
+                }
                 card.style.zIndex = 0;
-                openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                if(parentCard.classList.contains('open-cards-deck')) {
+                    openCardsDeck.splice(openCardsDeck.length - 1, 1);
+                }
                 return;
             }
             else {
                 if (el.classList.contains('pile')) {
-                    if (card.getAttribute('value') === '13') {
+                    if (card.getAttribute('value') === '13' && el.children.length===0) {
                         addCard();
                     }
                     else {

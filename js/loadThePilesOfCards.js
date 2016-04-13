@@ -1,3 +1,6 @@
+function feelTheField() {
+	
+}
 function shuffle(a) {
 	var j, x, i;
 	for (i = a.length; i; i -= 1) {
@@ -12,7 +15,6 @@ shuffle(arrayOfCards);
 var hidenCardsDeck = arrayOfCards.splice(0,24);
 var openCardsDeck=[];
 var NUMBERoFpILES = 7;
-
 
 
 for(var i=0;i<NUMBERoFpILES;i++)
@@ -41,11 +43,7 @@ for(var i=0;i<NUMBERoFpILES;i++)
 var hideDiv=document.getElementsByClassName('hiden-cards-deck')[0];
 var openDiv=document.getElementsByClassName('open-cards-deck')[0];
 var field=document.getElementById('field');
-field.onclick=function (event) {
-    if(event.target.classList.contains('hiden-cards-deck')){
-        onDeckClick();
-    }
-}
+hideDiv.onclick=onDeckClick;
 
 
 
@@ -56,32 +54,31 @@ function onDeckClick(){
 		var cardToAddDiv = document.createElement('div');
 		cardToAddDiv.classList.add('card');
 		cardToAddDiv.classList.add('dragable');
-		//cardToAddDiv.classList.add('droppable');
 		openCardsDeck[openCardsDeck.length] = hidenCardsDeck.splice(0,1)[0];
 		cardToAddDiv.setAttribute('value',openCardsDeck[openCardsDeck.length-1].value);
 		cardToAddDiv.setAttribute('suit',openCardsDeck[openCardsDeck.length-1].suit);
 		setBackground(cardToAddDiv,openCardsDeck[openCardsDeck.length-1].path);
 		openDiv=document.getElementsByClassName('open-cards-deck')[0];
 		openDiv.appendChild(cardToAddDiv);
+		console.log('cards in open deck'+openCardsDeck.length);
 	}
 	else
 	{
-		hidenCardsDeck=openCardsDeck;
-		openCardsDeck=[];
-		openDiv.innerHTML='';
-		onDeckClick();
+		if(openCardsDeck.length===0 && hidenCardsDeck.length===0){
+			alert('there are no more cardss in the deck!');
+			hideDiv.onclick=null;
+		}
+		else {
+			hidenCardsDeck = openCardsDeck;
+			openCardsDeck = [];
+			openDiv.innerHTML = '';
+			onDeckClick();
+		}
 	}
 }
 function setBackground(element,path){
 	element.style.background="url("+path+")";
 }
-/*
-var el = document.getElementById(1);
-var child = document.createElement('div');
-child.classList.add('card');
-setBackground(child,arrayOfCards[0].path);
-el.appendChild(child);
-*/
 
 
 
